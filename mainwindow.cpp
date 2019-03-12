@@ -12,3 +12,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_homeButton_clicked()
+{
+    hide();
+    dialogfilein = new DialogFileIn();
+    dialogfilein->show();
+}

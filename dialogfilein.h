@@ -2,6 +2,11 @@
 #define DIALOGFILEIN_H
 
 #include <QDialog>
+#include <dialogfileview.h>
+#include <QFile>
+
+extern QString file_name;
+extern QFile file;
 
 namespace Ui {
 class DialogFileIn;
@@ -15,8 +20,14 @@ public:
     explicit DialogFileIn(QWidget *parent = nullptr);
     ~DialogFileIn();
 
+private slots:
+    void on_f_selectButton_clicked();
+
+    void on_f_viewButton_clicked();
+
 private:
     Ui::DialogFileIn *ui;
+    DialogFileView *dialogfileview=nullptr;
 };
 
 #endif // DIALOGFILEIN_H

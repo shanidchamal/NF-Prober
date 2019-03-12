@@ -15,6 +15,9 @@ public:
     explicit DialogFileView(QWidget *parent = nullptr);
     ~DialogFileView();
 
+private slots:
+    void on_closeButton_clicked();
+
 private:
     Ui::DialogFileView *ui;
 };
