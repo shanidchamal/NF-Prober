@@ -21,7 +21,8 @@ DialogFileIn::~DialogFileIn()
 
 void DialogFileIn::on_f_selectButton_clicked()
 {
-    file_name = QFileDialog::getOpenFileName(this,"Open FILE",QDir::homePath());
+    QString filter = " Text File (*.txt) ;; DAT File (*.dat) ;; CSV File (*.csv) ";
+    file_name = QFileDialog::getOpenFileName(this,"Open FILE",QDir::homePath(),filter);
     file.setFileName(file_name);
     if(!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::information(this,"File Open Status","File not open!!");
@@ -33,13 +34,11 @@ void DialogFileIn::on_f_selectButton_clicked()
 }
 void DialogFileIn::on_f_viewButton_clicked()
 {
-    //if(file.isOpen() && dialogfileview != nullptr)
-        //dialogfileview->show();
     if(file.isOpen()) {
-        dialogfileview = new DialogFileView();
+        dialogfileview = new DialogFileView(this);
         dialogfileview->show();
     }
     else {
-        ui->label_f_status->setText("Select a file!!");
+        QMessageBox::information(this,"File Open Status","File not open!!");
     }
 }

@@ -13,70 +13,52 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>50</y>
-     <width>161</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>NF-Prober : FD Discovery</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="f_selectButton">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>160</y>
-     <width>101</width>
-     <height>41</height>
+     <y>50</y>
+     <width>431</width>
+     <height>281</height>
     </rect>
    </property>
-   <property name="text">
-    <string>SELECT FILE</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="f_viewButton">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>160</y>
-     <width>91</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>VIEW FILE</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="nextButton">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>280</y>
-     <width>88</width>
-     <height>34</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CONTINUE</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_f_status">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>230</y>
-     <width>311</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="3" column="1">
+     <widget class="QPushButton" name="nextButton">
+      <property name="text">
+       <string>CONTINUE</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="3">
+     <widget class="QLabel" name="label_f_status">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>NF-Prober : FD Discovery</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="f_selectButton">
+      <property name="text">
+       <string>SELECT FILE</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="f_viewButton">
+      <property name="text">
+       <string>VIEW FILE</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
