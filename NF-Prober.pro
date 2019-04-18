@@ -28,17 +28,25 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     dialogfilein.cpp \
-    dialogfileview.cpp
+    dialogfileview.cpp \
+    dialogfileconfirm.cpp \
+    data2int.cpp \
+    dependencies.cpp
 
 HEADERS += \
         mainwindow.h \
     dialogfilein.h \
-    dialogfileview.h
+    dialogfileview.h \
+    dialogfileconfirm.h \
+    data2int.h \
+    dependencies.h
 
 FORMS += \
         mainwindow.ui \
     dialogfilein.ui \
-    dialogfileview.ui
+    dialogfileview.ui \
+    dialogfileconfirm.ui \
+    dependencies.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

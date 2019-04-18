@@ -16,7 +16,7 @@ DialogFileView::DialogFileView(QWidget *parent) :
     QTextStream in(&temp_file);
     QString text = in.readAll();
     ui->plainTextEdit->setPlainText(text);
-    ui->plainTextEdit->setReadOnly(true);;
+    ui->plainTextEdit->setReadOnly(true);
     in.flush();
     temp_file.close();
 }

@@ -2,7 +2,8 @@
 #define DIALOGFILEIN_H
 
 #include <QDialog>
-#include <dialogfileview.h>
+#include "dialogfileview.h"
+#include "dialogfileconfirm.h"
 #include <QFile>
 
 extern QString file_name;
@@ -25,9 +26,12 @@ private slots:
 
     void on_f_viewButton_clicked();
 
+    void on_nextButton_clicked();
+
 private:
     Ui::DialogFileIn *ui;
-    DialogFileView *dialogfileview=nullptr;
+    DialogFileView *dialogfileview;
+    DialogFileConfirm * dialogfileconfirm;
 };
 
 #endif // DIALOGFILEIN_H
