@@ -21,8 +21,11 @@ Dependencies::Dependencies(QWidget *parent) :
     for(i=0;i<row_count;i++)
         tables[i]=(int *)malloc(row_count*sizeof(int)+1);
 
+    //generate sequence of data occurances
     read_data(fp,tables,row_count,attr_count);
     print_table(tables,row_count,attr_count);
+
+
 }
 
 Dependencies::~Dependencies()

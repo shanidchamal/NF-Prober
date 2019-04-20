@@ -31,7 +31,10 @@ SOURCES += \
     dialogfileview.cpp \
     dialogfileconfirm.cpp \
     data2int.cpp \
-    dependencies.cpp
+    dependencies.cpp \
+    candidate.cpp \
+    hashtable.cpp \
+    partition.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +42,10 @@ HEADERS += \
     dialogfileview.h \
     dialogfileconfirm.h \
     data2int.h \
-    dependencies.h
+    dependencies.h \
+    candidate.h \
+    hashtable.h \
+    partition.h
 
 FORMS += \
         mainwindow.ui \
