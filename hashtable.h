@@ -9,4 +9,7 @@ typedef struct HashTable {
     Candidate **table;
 }HashTable;
 
+HashTable *getNewHashTable(int size);
+int insertHashTable(HashTable *ht,int name,Candidate *candidate);
+
 #endif // HASHTABLE_H

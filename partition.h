@@ -7,5 +7,7 @@ typedef struct Partition {
     unsigned int *elements;
 }Partition;
 
+Partition *getNewPartition();
+
 
 #endif // PARTITION_H

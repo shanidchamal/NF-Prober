@@ -4,8 +4,8 @@
 #include "partition.h"
 
 typedef struct Candidate {
-    unsigned int name;
-    unsigned int rhs;
+    int name;
+    int rhs;
     Partition *partition;
     struct Candidate *next;
     int identity;
