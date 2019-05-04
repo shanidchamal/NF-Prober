@@ -65,3 +65,24 @@ int insertHashTable(HashTable *ht,int name,Candidate *candidate) {
 
     return (0);
 }
+
+void printHashTable(HashTable *ht) {
+    int i;
+    Candidate *node = NULL;
+
+    if(ht==NULL)
+        return;
+    printf("ht->size     == %d\n",ht->size);
+    printf("ht->key_count== %d\n",ht->key_count);
+    printf("ht->table:\n");
+    for(i=0;i<ht->size;i++) {
+        printf("[%2d]: ",i);
+        node=ht->table[i];
+        while(node!=NULL) {
+            printBitset(node->name);
+            printf("(%d) ",node->name);
+            node=node->next;
+        }
+        printf("\n");
+    }
+}

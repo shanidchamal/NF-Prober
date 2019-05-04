@@ -4,10 +4,12 @@
 typedef struct Partition {
     int set_count;
     int element_count;
-    unsigned int *elements;
+    int *elements;
 }Partition;
 
 Partition *getNewPartition();
+void printPartition(Partition *par);
 
+#define endmarker (1 << 31)
 
 #endif // PARTITION_H

@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    bitset.cpp \
+    intersectiontable.cpp \
         main.cpp \
         mainwindow.cpp \
     dialogfilein.cpp \
@@ -37,6 +39,8 @@ SOURCES += \
     partition.cpp
 
 HEADERS += \
+    bitset.h \
+    intersectiontable.h \
         mainwindow.h \
     dialogfilein.h \
     dialogfileview.h \

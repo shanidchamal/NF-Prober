@@ -23,6 +23,7 @@ void DialogFileIn::on_f_selectButton_clicked()
 {
     QString filter = " Text File (*.txt *.dat *.csv) ";
     file_name = QFileDialog::getOpenFileName(this,"Open FILE",QDir::homePath(),filter);
+    //file_name="/home/shanid/dataset/test.dat";
     file.setFileName(file_name);
     if(!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::information(this,"File Open Status","File not open!!");

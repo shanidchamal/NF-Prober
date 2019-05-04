@@ -11,3 +11,12 @@ Partition *getNewPartition() {
     self->elements=NULL;
     return self;
 }
+
+void printPartition(Partition *par) {
+    int i;
+    for(i=0;i<par->element_count;i++) {
+        printf("%d ",par->elements[i] & ~endmarker);
+        if(par->elements[i] & endmarker)
+            printf("\n");
+    }
+}
