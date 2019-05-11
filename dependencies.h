@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #define ATTRIBUTES 32
+#define FD(a,b) (a->identity == b->identity)
 
 namespace Ui {
 class Dependencies;
@@ -15,6 +16,9 @@ class Dependencies : public QDialog
 public:
     explicit Dependencies(QWidget *parent = nullptr);
     ~Dependencies();
+    void calculateFDs(int);
+    void compute_rhscand(int);
+    void generate_candidates(int);
 
 private:
     Ui::Dependencies *ui;

@@ -3,6 +3,7 @@
 #include "dialogfilein.h"
 #include <QDebug>
 #include <QTextStream>
+#include <QProgressDialog>
 
 int row_count,attr_count;
 QString f_name;

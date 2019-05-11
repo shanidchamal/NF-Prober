@@ -86,3 +86,25 @@ void printHashTable(HashTable *ht) {
         printf("\n");
     }
 }
+
+void destroyHashTable(HashTable *ht) {
+    free(ht->table);
+    free(ht);
+}
+
+int checkHashTable(HashTable *ht,int name,Candidate **candidate) {
+    Candidate *node=NULL;
+    int hashkey=0;
+
+    hashkey=name%ht->size;
+    node=ht->table[hashkey];
+
+    while(node!=NULL) {
+        if(node->name==name) {
+            *candidate=node;
+            return(1);
+        }
+        node=node->next;
+    }
+    return (0);
+}
