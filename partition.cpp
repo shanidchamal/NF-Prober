@@ -20,3 +20,8 @@ void printPartition(Partition *par) {
             printf("\n");
     }
 }
+
+void destroyPartition(Partition *par) {
+    free(par->elements);
+    free(par);
+}

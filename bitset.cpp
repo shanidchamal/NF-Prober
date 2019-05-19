@@ -13,6 +13,20 @@ int getNext(int bitset,int position) {
     }
 }
 
+int getPrefix(int a, int b) {
+    int prefix=0,pos_a=0,pos_b=0;
+    pos_a=getNext(a,0);
+    pos_b=getNext(b,0);
+    while(pos_a>0 && pos_b>0) {
+        if(pos_a != pos_b)
+            break;
+        prefix++;
+        pos_a=getNext(a,pos_a);
+        pos_b=getNext(b,pos_b);
+    }
+    return prefix;
+}
+
 void printBitset(int bitset) {
     int pos=0;
     pos=getNext(bitset,0);

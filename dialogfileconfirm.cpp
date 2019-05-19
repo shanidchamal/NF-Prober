@@ -18,15 +18,18 @@ DialogFileConfirm::DialogFileConfirm(QWidget *parent) :
         int j=0;
         QString temp;
         j = f_name.lastIndexOf("/");
-        qDebug() << "found / at" << j;
+        //qDebug() << "found / at" << j;
         ui->label_fname->setText(f_name.mid(j+1));
         ui->label_f_path->setText(f_name.mid(0,j+1));
         QTextStream in(&file);
         while(!in.atEnd()) {
             temp = in.readLine();
+            qDebug() << "QString:" << temp;
             row_count++;
         }
+        qDebug() <<"row Count:" << row_count;
         attr_count=temp.count(",")+1;
+        qDebug() << "attr count:" << attr_count;
         ui->label_f_rows->setText(QString::number(row_count));
         ui->label_f_cols->setText(QString::number(attr_count));
     }

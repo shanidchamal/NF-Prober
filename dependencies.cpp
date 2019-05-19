@@ -12,7 +12,7 @@
 
 Candidate **C=NULL;
 HashTable **C_sub=NULL;
-int cand_count[ATTRIBUTES]={0};
+int cand_count[ATTRIBUTES]={0},level;
 
 Dependencies::Dependencies(QWidget *parent) :
     QDialog(parent),
@@ -20,7 +20,7 @@ Dependencies::Dependencies(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    int *tables[ATTRIBUTES],i,level;
+    int *tables[ATTRIBUTES],i;
     FILE *fp = NULL;
     Candidate *candidate=NULL;
 
@@ -85,8 +85,11 @@ Dependencies::Dependencies(QWidget *parent) :
         printf("\n\n");
     }
 
-    for(level=1;attr_count+1;level++)
-        calculateFDs(level);
+    printf("\n----------------FDs-----------------------\n\n");
+
+    level=1;
+    while(level<(attr_count+1) && cand_count[level]>0)
+        calculateFDs();
 }
 
 Dependencies::~Dependencies()
@@ -94,14 +97,15 @@ Dependencies::~Dependencies()
     delete ui;
 }
 
-void Dependencies::calculateFDs(int level) {
+void Dependencies::calculateFDs() {
     compute_rhscand(level);
 
     //clean prev levels
     free(C[level-1]);
     destroyHashTable(C_sub[level-1]);
 
-    //generate_candidates(level);
+    level+=1;
+    generate_candidates(level);
 }
 
 void Dependencies::compute_rhscand(int level) {
@@ -116,11 +120,12 @@ void Dependencies::compute_rhscand(int level) {
             XA=X->name;
             //remove XA, set to 0
             XA &= ~(1 << (element-1));
-            if(checkHashTable(C_sub[level-1],XA,&sub))
+            if(checkHashTable(C_sub[level-1],XA,&sub)) {
                 //find intersection
                 X->rhs &= sub->rhs;
+            }
+            element=getNext(X->name,element);
         }
-        element=getNext(X->name,element);
     }
 
     for(i=0;i<cand_count[level];i++) {
@@ -131,14 +136,15 @@ void Dependencies::compute_rhscand(int level) {
         //get actual name of x->name
         element=getNext(A,0);
         while(element > 0) {
-            XA=X->name;{
+            XA=X->name;
                 //remove XA, set to 0
                 XA &= ~(1 << (element-1));
                 if(checkHashTable(C_sub[level-1],XA,&sub)) {
                     if(FD(sub,X)) {
                         R=X->name;
-                        //R=R-sub_name (MINUS) // 8-8=0;
+                        //R=R-sub_name (MINUS)
                         R &= ~sub->name;
+
                         printBitset(sub->name);
                         printf("-->");
                         printBitset(R);
@@ -165,7 +171,7 @@ void Dependencies::compute_rhscand(int level) {
                         while(element1 > 0) {
                             XB=X->name;
                             //insert (2^element-1)
-                            XB |= ~(1 << (element1-1));
+                            XB |= (1 << (element1-1));
                             //remove XB, with element
                             XB &= ~(1 << (element-1));
                             if(checkHashTable(C_sub[level],XB,&sub)) {
@@ -176,12 +182,99 @@ void Dependencies::compute_rhscand(int level) {
                         }
                     }
                 }
-            }
             element=getNext(A,element);
         }
     }
 }
 
 void Dependencies::generate_candidates(int level) {
-
+    int i_x=0,i_y=0,prefix=0,element=0;
+    int loaded=0,notfound=0,lev_size=0;
+    Candidate *X=NULL,*Y=NULL,*candidate=NULL,*sub=NULL;
+    int XY=0,R=0;
+    
+    //define level size and get hashtable and candidates
+    lev_size=(cand_count[level-1]*(attr_count-(level-1)))/level;
+    C[level]=(Candidate *) malloc(sizeof (Candidate)*lev_size);
+    C_sub[level]=getNewHashTable(lev_size);
+    
+    for(i_x=0;i_x<cand_count[level-1];i_x++) {
+        X=&C[level-1][i_x];
+        
+        //keys and full rhs pruning
+        //key pruning
+        if(X->identity==0) {
+            //R = 2^attr_count -1 (inserts all combination)
+            R = ~(~0 << attr_count);
+            // R = R-X->name
+            R &= ~X->name;
+            //intersection
+            R &= X->rhs;
+            
+            element=getNext(R,0);
+            while(element > 0) {
+                printBitset(X->name);
+                printf("-> %d   (key)\n",element);
+                element=getNext(R,element);
+            }
+            continue;
+        }
+        //full rhs
+        if(X->rhs==0)
+            continue;
+        
+        for(i_y=i_x+1;i_y<cand_count[level-1];i_y++) {
+            Y=&C[level-1][i_y];
+            prefix=getPrefix(X->name,Y->name);
+            if(prefix+1 != (level-1))
+                break;
+            
+            if(Y->identity==0 || Y->rhs ==0) {
+                continue;
+            }
+            
+            //new candidate XY
+            XY=X->name | Y->name;
+            notfound=0;
+            element=getNext(XY,0);
+            while(element > 0) {
+                R=XY;
+                //remove
+                R &= ~(1 << (element-1));
+                if(checkHashTable(C_sub[level-1],R,&sub)) {
+                    if(sub->identity==0 || sub->rhs==0) {
+                        notfound=1;
+                        break;
+                    }
+                    if(sub!=X && sub!=Y)
+                        if(sub->identity < Y->identity) {
+                            Y=sub;
+                        }
+                }
+                else
+                    notfound=1;              
+                element=getNext(XY,element);
+            }
+            if(notfound)
+                continue;
+            if(!loaded) {
+                IntersectionTblLOAD(X->partition);
+                loaded=1;
+            }
+            //generate new level candidates
+            candidate=&C[level][cand_count[level]++];
+            candidate->name=XY;
+            candidate->partition=Intersection(Y->partition);
+            //candidate->rhs = 2^attr_count -1 (inserts all combination)
+            candidate->rhs=~(~0 << attr_count);
+            candidate->identity=candidate->partition->element_count-candidate->partition->set_count;
+            insertHashTable(C_sub[level],candidate->name,candidate);
+        }
+        if(loaded) {
+            IntersectionTblUNLOAD(X->partition);
+            loaded=0;
+        }
+        destroyPartition(X->partition);
+        X->partition=NULL;
+    }
 }

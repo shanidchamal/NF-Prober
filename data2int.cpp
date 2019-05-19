@@ -7,11 +7,6 @@
 static int get_dict_key(int index, char* str);
 static void delete_dict();
 
-data2int::data2int()
-{
-
-}
-
 typedef struct vertex {
     char ch;
     int key;
@@ -52,9 +47,10 @@ void read_data(FILE *file, int **tables, int noof_rows, int noof_attr) {
             qDebug() << "Not enough attributes on line" << i+1;
             exit(1);
         }
-    tables[j][i]=get_dict_key(j,token);
-    token=strtok(NULL,",");
-    }
+        qDebug() << "token:" << token;
+        tables[j][i]=get_dict_key(j,token);
+        token=strtok(NULL,",");
+        }
     }
     delete_dict();
 }

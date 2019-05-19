@@ -8,6 +8,7 @@ typedef struct Partition {
 }Partition;
 
 Partition *getNewPartition();
+void destroyPartition(Partition *par);
 void printPartition(Partition *par);
 
 #define endmarker (1 << 31)

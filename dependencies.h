@@ -16,7 +16,7 @@ class Dependencies : public QDialog
 public:
     explicit Dependencies(QWidget *parent = nullptr);
     ~Dependencies();
-    void calculateFDs(int);
+    void calculateFDs();
     void compute_rhscand(int);
     void generate_candidates(int);
 
